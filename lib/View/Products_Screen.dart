@@ -15,7 +15,7 @@ class Products_Screen extends StatelessWidget {
 
   Widget mainWidgets(List<productModel> products) {
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
       ),
       itemCount: products.length,
@@ -33,13 +33,15 @@ class Products_Screen extends StatelessWidget {
             future: HomeViewmodel().category_Products(title),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               }
               if (snapshot.hasError) {
-                return Center(child: Text("Error while Feathing the Data"));
+                return const Center(
+                  child: Text("Error while Feathing the Data"),
+                );
               }
               if (snapshot.data!.isEmpty) {
-                return Center(child: Text("No Data Avaliable"));
+                return const Center(child: Text("No Data Avaliable"));
               }
               var snapData = snapshot.data!;
               return mainWidgets(snapData);

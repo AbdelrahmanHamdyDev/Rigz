@@ -121,7 +121,7 @@ class _productDetail_ScreenState extends State<productDetail_Screen> {
                 AnimatedSmoothIndicator(
                   activeIndex: _currentIMGIndex,
                   count: widget.product.imageUrl.length,
-                  effect: ScrollingDotsEffect(),
+                  effect: const ScrollingDotsEffect(),
                   onDotClicked: (index) {
                     setState(() {
                       _currentIMGIndex = index;
@@ -129,19 +129,18 @@ class _productDetail_ScreenState extends State<productDetail_Screen> {
                     _carouselController.animateToPage(index);
                   },
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-                    margin: EdgeInsets.symmetric(horizontal: 15),
-                    decoration: BoxDecoration(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 20,
+                      vertical: 30,
+                    ),
+                    margin: const EdgeInsets.symmetric(horizontal: 15),
+                    decoration: const BoxDecoration(
                       color: Colors.deepPurpleAccent,
                       boxShadow: [
-                        BoxShadow(
-                          color: Colors.black,
-                          blurRadius: 10,
-                          offset: Offset(-1, -1),
-                        ),
+                        BoxShadow(blurRadius: 10, offset: Offset(-1, -1)),
                       ],
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(40),
@@ -156,14 +155,14 @@ class _productDetail_ScreenState extends State<productDetail_Screen> {
                           //Title
                           Text(
                             widget.product.title,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 40,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           //Description
                           Text(widget.product.description),
-                          SizedBox(height: 30),
+                          const SizedBox(height: 30),
                           Row(
                             children: [
                               Column(
@@ -188,11 +187,11 @@ class _productDetail_ScreenState extends State<productDetail_Screen> {
                                       Decimal.parse("0")))
                                     Text(
                                       "${discountPrice * Decimal.fromInt(_cartQuantity)} £",
-                                      style: TextStyle(fontSize: 32),
+                                      style: const TextStyle(fontSize: 32),
                                     ),
                                 ],
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
@@ -210,11 +209,11 @@ class _productDetail_ScreenState extends State<productDetail_Screen> {
                                               }
                                             });
                                           },
-                                          icon: Icon(Icons.remove),
+                                          icon: const Icon(Icons.remove),
                                         ),
                                         Text(
                                           _cartQuantity.toString(),
-                                          style: TextStyle(fontSize: 22),
+                                          style: const TextStyle(fontSize: 22),
                                         ),
                                         IconButton(
                                           onPressed: () {
@@ -229,7 +228,7 @@ class _productDetail_ScreenState extends State<productDetail_Screen> {
                                                 ScaffoldMessenger.of(
                                                   context,
                                                 ).showSnackBar(
-                                                  SnackBar(
+                                                  const SnackBar(
                                                     content: Text(
                                                       "This is the maximum amount in the stock",
                                                     ),
@@ -238,7 +237,7 @@ class _productDetail_ScreenState extends State<productDetail_Screen> {
                                               }
                                             });
                                           },
-                                          icon: Icon(Icons.add),
+                                          icon: const Icon(Icons.add),
                                         ),
                                       ],
                                     ),
@@ -246,7 +245,7 @@ class _productDetail_ScreenState extends State<productDetail_Screen> {
                                   Card(
                                     child: TextButton(
                                       onPressed: () {},
-                                      child: Text("Add To Cart"),
+                                      child: const Text("Add To Cart"),
                                     ),
                                   ),
                                 ],
@@ -262,11 +261,11 @@ class _productDetail_ScreenState extends State<productDetail_Screen> {
             ),
             if (widget.product.discount != Decimal.parse("0"))
               Padding(
-                padding: EdgeInsets.all(15),
+                padding: const EdgeInsets.all(15),
                 child: CircleAvatar(
                   radius: 30,
                   backgroundColor: Colors.transparent,
-                  backgroundImage: AssetImage("assets/Discount.png"),
+                  backgroundImage: const AssetImage("assets/Discount.png"),
                   child: Text("${widget.product.discount}%"),
                 ),
               ),

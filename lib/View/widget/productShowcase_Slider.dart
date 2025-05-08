@@ -39,9 +39,12 @@ class productShowcase_Slider extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).push(
@@ -57,7 +60,7 @@ class productShowcase_Slider extends StatelessWidget {
                         ),
                       );
                     },
-                    child: Text("View All"),
+                    child: const Text("View All"),
                   ),
                 ],
               ),
@@ -73,7 +76,7 @@ class productShowcase_Slider extends StatelessWidget {
               ),
               SizedBox(
                 width: MediaQuery.of(context).size.width / 1.5,
-                child: Divider(),
+                child: const Divider(),
               ),
             ],
           ),

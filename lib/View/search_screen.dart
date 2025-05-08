@@ -40,7 +40,7 @@ class _SearchpageState extends State<searchScreen> {
   void _scrollToTop() {
     _scrollController.animateTo(
       0,
-      duration: Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 500),
       curve: Curves.decelerate,
     );
   }
@@ -52,22 +52,26 @@ class _SearchpageState extends State<searchScreen> {
           (_showScrollButton)
               ? FloatingActionButton(
                 onPressed: _scrollToTop,
-                child: Icon(Icons.arrow_upward_outlined),
+                child: const Icon(Icons.arrow_upward_outlined),
               )
               : null,
       body: SafeArea(
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
-            SliverToBoxAdapter(child: SizedBox(height: 20)),
+            const SliverToBoxAdapter(child: SizedBox(height: 20)),
             SliverAppBar(
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
-                titlePadding: EdgeInsets.only(left: 50, right: 20, bottom: 10),
+                titlePadding: const EdgeInsets.only(
+                  left: 50,
+                  right: 20,
+                  bottom: 10,
+                ),
                 title: SearchBar(
                   controller: _controller,
                   hintText: " Search...",
-                  leading: Icon(Icons.search),
+                  leading: const Icon(Icons.search),
                   onSubmitted: (userText) {
                     setState(() {
                       enteredText = userText;
@@ -75,7 +79,7 @@ class _SearchpageState extends State<searchScreen> {
                   },
                   trailing: [
                     IconButton(
-                      icon: Icon(Icons.clear),
+                      icon: const Icon(Icons.clear),
                       onPressed: () {
                         _controller.clear();
                         setState(() {
@@ -87,22 +91,22 @@ class _SearchpageState extends State<searchScreen> {
                 ),
               ),
             ),
-            SliverToBoxAdapter(child: SizedBox(height: 10)),
+            const SliverToBoxAdapter(child: SizedBox(height: 10)),
             if (enteredText.isNotEmpty)
               SliverToBoxAdapter(
                 child: FutureBuilder(
                   future: HomeViewmodel().search_ForProduct(enteredText),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     }
                     if (snapshot.hasError) {
-                      return Center(
+                      return const Center(
                         child: Text("Error while Feathing the Data"),
                       );
                     }
                     if (snapshot.data!.isEmpty || snapshot.data == null) {
-                      return Center(child: Text("No Data Avaliable"));
+                      return const Center(child: Text("No Data Avaliable"));
                     }
                     List<productModel> snapData = snapshot.data!;
                     return SizedBox(

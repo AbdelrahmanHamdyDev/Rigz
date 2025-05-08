@@ -72,12 +72,11 @@ class cartScreen extends StatelessWidget {
           //products
           Container(
             height: MediaQuery.of(context).size.height / 1.5,
-            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-            padding: EdgeInsets.all(10),
+            margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.white,
               border: Border.all(
-                style: BorderStyle.solid,
                 width: 2,
                 strokeAlign: BorderSide.strokeAlignOutside,
                 color: Theme.of(context).colorScheme.onSurface,
@@ -96,9 +95,9 @@ class cartScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: OutlinedButton.icon(
               onPressed: () {},
-              icon: Icon(Icons.arrow_forward_ios),
+              icon: const Icon(Icons.arrow_forward_ios),
               iconAlignment: IconAlignment.end,
-              label: Text("Go To Pay"),
+              label: const Text("Go To Pay"),
             ),
           ),
         ],

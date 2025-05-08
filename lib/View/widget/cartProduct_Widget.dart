@@ -16,7 +16,7 @@ class _cartProduct_WidgetState extends State<cartProduct_Widget> {
   Widget build(BuildContext context) {
     return Card(
       elevation: 20,
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Row(
@@ -41,7 +41,7 @@ class _cartProduct_WidgetState extends State<cartProduct_Widget> {
                 maxLines: 2,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Card(
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -58,11 +58,11 @@ class _cartProduct_WidgetState extends State<cartProduct_Widget> {
                         }
                       });
                     },
-                    icon: Icon(Icons.remove),
+                    icon: const Icon(Icons.remove),
                   ),
                   Text(
                     _cartQuantity.toString(),
-                    style: TextStyle(fontSize: 22),
+                    style: const TextStyle(fontSize: 22),
                   ),
                   IconButton(
                     onPressed: () {
@@ -72,7 +72,7 @@ class _cartProduct_WidgetState extends State<cartProduct_Widget> {
                         } else {
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
+                            const SnackBar(
                               content: Text(
                                 "This is the maximum amount in the stock",
                               ),
@@ -81,7 +81,7 @@ class _cartProduct_WidgetState extends State<cartProduct_Widget> {
                         }
                       });
                     },
-                    icon: Icon(Icons.add),
+                    icon: const Icon(Icons.add),
                   ),
                 ],
               ),

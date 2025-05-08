@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:rigz/View/widget/productShowcase_Slider.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:rigz/ViewModel/home_ViewModel.dart';
+import 'package:rigz/bloc/Cart/bloc.dart';
+import 'package:rigz/bloc/Cart/state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class homeScreen extends StatelessWidget {
   final homeController = HomeViewmodel();
@@ -19,12 +22,11 @@ class homeScreen extends StatelessWidget {
               expandedHeight: MediaQuery.of(context).size.height / 5,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
-                titlePadding: EdgeInsets.symmetric(horizontal: 10),
+                titlePadding: const EdgeInsets.symmetric(horizontal: 10),
                 title: Row(
                   children: [
-                    Text("Rigz"),
-                    Spacer(),
-                    //TODO: search Function in product
+                    const Text("Rigz"),
+                    const Spacer(),
                     IconButton(
                       onPressed: () {
                         Navigator.of(context).push(
@@ -33,7 +35,7 @@ class homeScreen extends StatelessWidget {
                           ),
                         );
                       },
-                      icon: Icon(Icons.search),
+                      icon: const Icon(Icons.search),
                     ),
                     //TODO: create new bloc state to choose the pc parts and put as whole in cart
                     // IconButton(
@@ -46,11 +48,16 @@ class homeScreen extends StatelessWidget {
                           MaterialPageRoute(builder: (context) => cartScreen()),
                         );
                       },
-                      icon: badges.Badge(
-                        //TODO: get the lengh of the cart items (Bloc)
-                        badgeContent: Text('7'),
-                        badgeAnimation: badges.BadgeAnimation.scale(),
-                        child: Icon(Icons.shopping_bag_outlined),
+                      icon: BlocSelector<productBloc, productsState, int>(
+                        selector: (state) => state.products.length,
+                        builder: (context, int length) {
+                          print(length);
+                          return badges.Badge(
+                            badgeContent: Text(length.toString()),
+                            badgeAnimation: const badges.BadgeAnimation.scale(),
+                            child: const Icon(Icons.shopping_bag_outlined),
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -62,13 +69,15 @@ class homeScreen extends StatelessWidget {
                 future: homeController.categories(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
+                    return const Center(child: CircularProgressIndicator());
                   }
                   if (snapshot.hasError) {
-                    return Center(child: Text("Error while Feathing the Data"));
+                    return const Center(
+                      child: Text("Error while Feathing the Data"),
+                    );
                   }
                   if (snapshot.data!.isEmpty) {
-                    return Center();
+                    return const Center();
                   }
                   List<CategoryModel> snapData = snapshot.data!;
 

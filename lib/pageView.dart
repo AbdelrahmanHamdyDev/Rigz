@@ -31,19 +31,19 @@ class _pageViewControllerState extends State<pageViewController> {
       body: PageView(
         controller: _pageController,
         onPageChanged: _onTapped,
-        children: [homeScreen(), signScreen(type: "i")],
+        children: [homeScreen(), const signScreen(type: "i")],
       ),
       bottomNavigationBar: SalomonBottomBar(
         currentIndex: _currentIndex,
         onTap: _onTapped,
         items: [
           SalomonBottomBarItem(
-            icon: Icon(Icons.home_filled),
-            title: Text("Home"),
+            icon: const Icon(Icons.home_filled),
+            title: const Text("Home"),
           ),
           SalomonBottomBarItem(
-            icon: Icon(Icons.account_circle_rounded),
-            title: Text("Account"),
+            icon: const Icon(Icons.account_circle_rounded),
+            title: const Text("Account"),
           ),
         ],
       ),

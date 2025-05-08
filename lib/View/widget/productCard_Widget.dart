@@ -26,7 +26,7 @@ class productCard_Widget extends StatelessWidget {
         children: [
           Card(
             child: Padding(
-              padding: EdgeInsets.all(15),
+              padding: const EdgeInsets.all(15),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,15 +42,17 @@ class productCard_Widget extends StatelessWidget {
                         fit: BoxFit.contain,
                         loadingBuilder: (context, child, loadingProgress) {
                           if (loadingProgress == null) return child;
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
                         },
                         errorBuilder: (context, error, stackTrace) {
-                          return Icon(Icons.broken_image);
+                          return const Icon(Icons.broken_image);
                         },
                       ),
                     ),
                   ),
-                  Spacer(),
+                  const Spacer(),
                   //name
                   Text(product.title),
                   //price
@@ -78,7 +80,7 @@ class productCard_Widget extends StatelessWidget {
             CircleAvatar(
               radius: 30,
               backgroundColor: Colors.transparent,
-              backgroundImage: AssetImage("assets/Discount.png"),
+              backgroundImage: const AssetImage("assets/Discount.png"),
               child: Text("${product.discount}%"),
             ),
         ],

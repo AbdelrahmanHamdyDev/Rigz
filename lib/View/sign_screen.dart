@@ -52,7 +52,7 @@ class _signScreenState extends State<signScreen> {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text("Error")));
+        ).showSnackBar(const SnackBar(content: Text("Error")));
       }
     }
   }
@@ -67,12 +67,14 @@ class _signScreenState extends State<signScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: (is_SignIn) ? Text("SignIn") : Text("SignUp")),
+      appBar: AppBar(
+        title: (is_SignIn) ? const Text("SignIn") : const Text("SignUp"),
+      ),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -80,7 +82,7 @@ class _signScreenState extends State<signScreen> {
                     if (!is_SignIn)
                       TextFormField(
                         controller: _userNameController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'UserName',
                           border: OutlineInputBorder(),
                         ),
@@ -91,12 +93,12 @@ class _signScreenState extends State<signScreen> {
                           return null;
                         },
                       ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
 
                     TextFormField(
                       controller: _emailController,
                       keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: 'Email',
                         border: OutlineInputBorder(),
                       ),
@@ -107,13 +109,13 @@ class _signScreenState extends State<signScreen> {
                         return null;
                       },
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     TextFormField(
                       controller: _passwordController,
                       obscureText: _obscurePassword,
                       decoration: InputDecoration(
                         labelText: 'Password',
-                        border: OutlineInputBorder(),
+                        border: const OutlineInputBorder(),
                         suffixIcon: IconButton(
                           icon: Icon(
                             _obscurePassword
@@ -138,7 +140,7 @@ class _signScreenState extends State<signScreen> {
                       },
                     ),
 
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         backgroundColor:
@@ -157,8 +159,8 @@ class _signScreenState extends State<signScreen> {
                       },
                       child:
                           (is_SignIn)
-                              ? Text("Create new account?")
-                              : Text("Have an email?"),
+                              ? const Text("Create new account?")
+                              : const Text("Have an email?"),
                     ),
                   ],
                 ),

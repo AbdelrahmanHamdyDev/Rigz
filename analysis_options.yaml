@@ -1,0 +1,15 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - lib/generated/**
+
+linter:
+  rules:
+    prefer_const_constructors: true
+    create_immutables:
+    avoid_redundant_argument_values: true
+    prefer _ final _ locals: true
+    avoid_dynamic_calls: true
+    prefer_const_declarations: true
+    always_declare_return_types: true
