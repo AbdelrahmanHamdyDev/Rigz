@@ -15,12 +15,16 @@ class Products_Screen extends StatelessWidget {
 
   Widget mainWidgets(List<productModel> products) {
     return GridView.builder(
+      padding: const EdgeInsets.all(8),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
       ),
       itemCount: products.length,
       itemBuilder:
-          (context, index) => productCard_Widget(product: products[index]),
+          (context, index) =>
+              FittedBox(child: productCard_Widget(product: products[index])),
     );
   }
 
@@ -28,24 +32,26 @@ class Products_Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return (products.isEmpty)
         ? Scaffold(
-          appBar: AppBar(title: Text(title)),
-          body: FutureBuilder(
-            future: HomeViewmodel().category_Products(title),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              if (snapshot.hasError) {
-                return const Center(
-                  child: Text("Error while Feathing the Data"),
-                );
-              }
-              if (snapshot.data!.isEmpty) {
-                return const Center(child: Text("No Data Avaliable"));
-              }
-              var snapData = snapshot.data!;
-              return mainWidgets(snapData);
-            },
+          appBar: (title != "Favorites") ? AppBar(title: Text(title)) : null,
+          body: SafeArea(
+            child: FutureBuilder(
+              future: HomeViewmodel().category_Products(title),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                if (snapshot.hasError) {
+                  return const Center(
+                    child: Text("Error while Feathing the Data"),
+                  );
+                }
+                if (snapshot.data!.isEmpty) {
+                  return const Center(child: Text("No Data Avaliable"));
+                }
+                var snapData = snapshot.data!;
+                return mainWidgets(snapData);
+              },
+            ),
           ),
         )
         : mainWidgets(products);

@@ -18,12 +18,18 @@ dependencies:
   badges: ^3.1.2
   smooth_page_indicator: ^1.2.1
   carousel_slider: ^5.0.0
+  slide_to_confirm: ^1.1.0
+  animated_flip_counter: ^0.3.4
 
   #Backend
   decimal: ^3.2.1
   supabase_flutter: ^2.8.4
   flutter_dotenv: ^5.2.1
   flutter_bloc: ^9.1.1
+  fluttertoast: ^8.2.12
+  flutter_neumorphic_plus: ^3.4.0
+  dio: ^5.8.0+1
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:

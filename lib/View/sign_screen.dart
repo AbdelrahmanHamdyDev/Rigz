@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rigz/ViewModel/sign_ViewModel.dart';
+import 'package:rigz/bloc/Is_Sign/Cubit.dart';
 
 class signScreen extends StatefulWidget {
   const signScreen({super.key, required this.type});
@@ -47,7 +49,11 @@ class _signScreenState extends State<signScreen> {
       }
 
       if (response) {
-        //TODO: change the signin condition in the statemanagment (bloc)
+        context.read<SignCubit>().toggleSign();
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("You Entered Successfully")),
+        );
       } else {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(

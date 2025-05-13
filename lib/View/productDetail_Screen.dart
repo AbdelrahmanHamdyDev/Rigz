@@ -1,10 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rigz/Model/CartModel.dart';
 import 'package:rigz/View/widget/imagePreview.dart';
+import 'package:rigz/bloc/Cart/bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:rigz/Model/productModel.dart';
 import 'package:flutter/material.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:decimal/decimal.dart';
+import 'package:rigz/bloc/Cart/event.dart' as CartEvent;
+import 'package:animated_flip_counter/animated_flip_counter.dart';
 
 class productDetail_Screen extends StatefulWidget {
   productDetail_Screen({super.key, required this.product});
@@ -51,11 +56,13 @@ class _productDetail_ScreenState extends State<productDetail_Screen> {
 
   @override
   Widget build(BuildContext context) {
-    Decimal discountPrice =
-        (widget.product.price *
-                (Decimal.fromInt(100) - widget.product.discount) /
-                Decimal.fromInt(100))
-            .toDecimal();
+    Decimal discountPrice = Decimal.parse(
+      (widget.product.price *
+              (Decimal.fromInt(100) - widget.product.discount) /
+              Decimal.fromInt(100))
+          .toDecimal()
+          .toStringAsFixed(2),
+    );
     return Scaffold(
       backgroundColor: _background_Color,
 
@@ -149,7 +156,6 @@ class _productDetail_ScreenState extends State<productDetail_Screen> {
                     ),
                     child: SingleChildScrollView(
                       child: Column(
-                        spacing: 20,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           //Title
@@ -161,16 +167,23 @@ class _productDetail_ScreenState extends State<productDetail_Screen> {
                             ),
                           ),
                           //Description
-                          Text(widget.product.description),
-                          const SizedBox(height: 30),
+                          Text(
+                            widget.product.description,
+                            style: const TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          const SizedBox(height: 50),
                           Row(
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    "${(widget.product.price) * Decimal.fromInt(_cartQuantity)} £",
-                                    style: TextStyle(
+                                  AnimatedFlipCounter(
+                                    duration: const Duration(milliseconds: 300),
+                                    suffix: "  LE",
+                                    textStyle: TextStyle(
                                       fontSize:
                                           (widget.product.discount !=
                                                   Decimal.parse("0"))
@@ -182,12 +195,29 @@ class _productDetail_ScreenState extends State<productDetail_Screen> {
                                               ? TextDecoration.lineThrough
                                               : null,
                                     ),
+                                    value:
+                                        ((widget.product.price) *
+                                                Decimal.fromInt(_cartQuantity))
+                                            .toDouble(),
                                   ),
+
                                   if ((widget.product.discount !=
                                       Decimal.parse("0")))
-                                    Text(
-                                      "${discountPrice * Decimal.fromInt(_cartQuantity)} £",
-                                      style: const TextStyle(fontSize: 32),
+                                    AnimatedFlipCounter(
+                                      duration: const Duration(
+                                        milliseconds: 500,
+                                      ),
+                                      suffix: "  LE",
+                                      textStyle: const TextStyle(
+                                        fontSize: 32,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      value:
+                                          (discountPrice *
+                                                  Decimal.fromInt(
+                                                    _cartQuantity,
+                                                  ))
+                                              .toDouble(),
                                     ),
                                 ],
                               ),
@@ -196,55 +226,110 @@ class _productDetail_ScreenState extends State<productDetail_Screen> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   //Counter
-                                  Card(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      spacing: 20,
-                                      children: [
-                                        IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              if (_cartQuantity > 1) {
-                                                _cartQuantity--;
-                                              }
-                                            });
-                                          },
-                                          icon: const Icon(Icons.remove),
-                                        ),
-                                        Text(
-                                          _cartQuantity.toString(),
-                                          style: const TextStyle(fontSize: 22),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              if (_cartQuantity <=
-                                                  widget.product.stockAmount) {
-                                                _cartQuantity++;
-                                              } else {
-                                                ScaffoldMessenger.of(
-                                                  context,
-                                                ).hideCurrentSnackBar();
-                                                ScaffoldMessenger.of(
-                                                  context,
-                                                ).showSnackBar(
-                                                  const SnackBar(
-                                                    content: Text(
-                                                      "This is the maximum amount in the stock",
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                            });
-                                          },
-                                          icon: const Icon(Icons.add),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: const [
+                                        BoxShadow(color: Color(0XFF1E1E1E)),
+                                        BoxShadow(
+                                          offset: Offset(2, 2),
+                                          blurRadius: 4,
                                         ),
                                       ],
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 12,
+                                      ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                if (_cartQuantity > 1) {
+                                                  _cartQuantity--;
+                                                }
+                                              });
+                                            },
+                                            child: Container(
+                                              height: 20,
+                                              width: 20,
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xFF5E5E5E),
+                                                borderRadius:
+                                                    BorderRadius.circular(2),
+                                              ),
+                                              child: const Icon(
+                                                Icons.remove,
+                                                size: 10,
+                                              ),
+                                            ),
+                                          ),
+                                          const SizedBox(width: 30),
+                                          Text(
+                                            _cartQuantity.toString(),
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 30),
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                if (_cartQuantity <
+                                                    widget
+                                                        .product
+                                                        .stockAmount) {
+                                                  _cartQuantity++;
+                                                } else {
+                                                  ScaffoldMessenger.of(
+                                                    context,
+                                                  ).hideCurrentSnackBar();
+                                                  ScaffoldMessenger.of(
+                                                    context,
+                                                  ).showSnackBar(
+                                                    const SnackBar(
+                                                      content: Text(
+                                                        "This is the maximum amount in the stock",
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                              });
+                                            },
+                                            child: Container(
+                                              height: 20,
+                                              width: 20,
+                                              decoration: BoxDecoration(
+                                                color: const Color(0xFF5E5E5E),
+                                                borderRadius:
+                                                    BorderRadius.circular(2),
+                                              ),
+                                              child: const Icon(
+                                                Icons.add,
+                                                size: 10,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Card(
                                     child: TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        context.read<CartBloc>().add(
+                                          CartEvent.Addproduct(
+                                            CartModel(
+                                              product: widget.product,
+                                              quantity: _cartQuantity,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                       child: const Text("Add To Cart"),
                                     ),
                                   ),

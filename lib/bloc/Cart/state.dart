@@ -1,10 +1,10 @@
 import 'package:rigz/Model/CartModel.dart';
 
-class productsState {
+class CartState {
   final List<CartModel> products;
-  productsState({required this.products});
+  CartState({required this.products});
 
-  productsState copyWith({List<CartModel>? products}) {
-    return productsState(products: products ?? this.products);
+  CartState copyWith({List<CartModel>? products}) {
+    return CartState(products: products ?? this.products);
   }
 }
